@@ -50,13 +50,18 @@ DROP TABLE IF EXISTS `pr_log`;
 CREATE TABLE `pr_log` (
   `log_id` int NOT NULL AUTO_INCREMENT,
   `exercise_id` int NOT NULL,
+  `workout_exercise_id` int DEFAULT NULL,
   `old_weight` decimal(5,2) DEFAULT NULL,
+  `sets` int DEFAULT NULL,
+  `reps` int DEFAULT NULL,
   `new_weight` decimal(5,2) DEFAULT NULL,
   `log_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`log_id`),
   KEY `exercise_id` (`exercise_id`),
-  CONSTRAINT `pr_log_ibfk_1` FOREIGN KEY (`exercise_id`) REFERENCES `exercises` (`exercise_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `workout_exercise_id` (`workout_exercise_id`),
+  CONSTRAINT `pr_log_ibfk_1` FOREIGN KEY (`exercise_id`) REFERENCES `exercises` (`exercise_id`),
+  CONSTRAINT `pr_log_ibfk_2` FOREIGN KEY (`workout_exercise_id`) REFERENCES `workout_exercises` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +70,6 @@ CREATE TABLE `pr_log` (
 
 LOCK TABLES `pr_log` WRITE;
 /*!40000 ALTER TABLE `pr_log` DISABLE KEYS */;
-INSERT INTO `pr_log` VALUES (1,7,52.50,55.00,'2026-03-08 02:07:43'),(2,8,10.00,12.00,'2026-03-08 02:07:43'),(3,18,NULL,43.30,'2026-03-08 02:19:32');
 /*!40000 ALTER TABLE `pr_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,4 +168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-09 17:54:18
+-- Dump completed on 2026-03-09 17:57:34

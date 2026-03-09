@@ -68,6 +68,7 @@ ORDER BY total_volym_kg DESC;
 -- ============================================================
 -- TRIGGER: Logga när ett personligt rekord sätts
 -- Körs automatiskt varje gång en rad läggs till i workout_exercises
+-- Sparar också sets, reps och kopplar till workout_exercises
 -- ============================================================
 DELIMITER //
 
@@ -85,8 +86,8 @@ BEGIN
 
     -- Om ny vikt är högre (eller det är första gången), logga det
     IF current_pr IS NULL OR NEW.weight_kg > current_pr THEN
-        INSERT INTO pr_log (exercise_id, old_weight, new_weight)
-        VALUES (NEW.exercise_id, current_pr, NEW.weight_kg);
+        INSERT INTO pr_log (exercise_id, workout_exercise_id, old_weight, sets, reps, new_weight)
+        VALUES (NEW.exercise_id, NEW.id, current_pr, NEW.sets, NEW.reps, NEW.weight_kg);
     END IF;
 END//
 

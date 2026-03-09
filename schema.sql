@@ -34,10 +34,14 @@ CREATE TABLE workout_exercises (
 CREATE TABLE pr_log (
     log_id INT AUTO_INCREMENT PRIMARY KEY,
     exercise_id INT NOT NULL,
+    workout_exercise_id INT,
     old_weight DECIMAL(5,2),
+    sets INT,
+    reps INT,
     new_weight DECIMAL(5,2),
     log_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (exercise_id) REFERENCES exercises(exercise_id)
+    FOREIGN KEY (exercise_id) REFERENCES exercises(exercise_id),
+    FOREIGN KEY (workout_exercise_id) REFERENCES workout_exercises(id)
 );
 
 -- Exempeldata: 18 gymövningar
